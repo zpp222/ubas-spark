@@ -5,11 +5,11 @@
 >saprk-submit
 ```
 bin/spark-submit --master yarn \
---deploy-mode client --num-executors 2 \
+--deploy-mode client \
+--num-executors 2 \
 --executor-cores 2  \
 --executor-memory 512M \
---class org.ubas.spark.mongodb.demo.SparkMongoTest1  \
-zpp/ubas-spark.jar
+--class ubas1  \
+task/ubas-spark.jar
 ```
-
 >
