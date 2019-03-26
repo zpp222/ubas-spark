@@ -1,6 +1,6 @@
 # ubas-spark
 [大数据环境搭建指导文档](https://blog.csdn.net/zphyy1988)
-[spark-mongo java-api](https://docs.mongodb.com/spark-connector/master/java-api/)
+
 **ubas-spark**
 >saprk-submit
 ```
