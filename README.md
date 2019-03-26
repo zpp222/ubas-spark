@@ -1,5 +1,5 @@
 # ubas-spark
-[大数据环境搭建指导文档](https://blog.csdn.net/zphyy1988)
+[CSDN-大数据环境搭建指导文档](https://blog.csdn.net/zphyy1988)
 
 **ubas-spark**
 >saprk-submit
