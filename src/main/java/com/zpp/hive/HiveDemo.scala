@@ -2,7 +2,7 @@ package com.zpp.hive
 
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
-object demo{
+object HiveDemo{
   def main(args: Array[String]): Unit = {
     val spark:SparkSession = SparkSession.builder
       .appName("spark sql on hive test1")

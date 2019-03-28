@@ -1,5 +1,5 @@
-object demo{
+object SqlDemo{
   def main(args: Array[String]): Unit = {
-
+    print('hello)
   }
 }
