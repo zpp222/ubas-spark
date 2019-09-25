@@ -7,7 +7,7 @@ import org.apache.spark.sql.{DataFrame, SparkSession, functions}
 // Socket source (for testing)
 // 不支持容错
 
-object SocketSource {
+object Socket_struct_stream {
 
   def main(args: Array[String]): Unit = {
     val spark: SparkSession = SparkSession.builder.appName("socket consumer").getOrCreate()

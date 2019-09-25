@@ -1,6 +1,6 @@
 import org.apache.spark.sql.SparkSession
 
-object KafkaSource {
+object Kafka_struct_stream {
 
   def main(args: Array[String]): Unit = {
     val spark: SparkSession = SparkSession.builder.appName("kafka provider").getOrCreate()

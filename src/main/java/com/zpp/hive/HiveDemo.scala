@@ -1,5 +1,3 @@
-package com.zpp.hive
-
 import org.apache.spark.sql.{Dataset, Row, SparkSession}
 
 object HiveDemo {
