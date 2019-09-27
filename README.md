@@ -18,7 +18,7 @@ bin/spark-submit --master yarn \
 --deploy-mode client --num-executors 2 \
 --executor-cores 2  --executor-memory 512M \
 --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.0 \
---class KafkaConsumer  task/ubas-spark.jar
+--class Kafka_struct_stream  task/ubas-spark.jar
 
 
 bin/kafka-console-producer.sh --broker-list master:9092,slave1:9092 --topic stream_topic
