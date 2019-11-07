@@ -42,15 +42,24 @@ object AlsCF {
      */
     val alsExplicit = new ALS().setMaxIter(5).setRegParam(0.01).setUserCol("userId").setItemCol("movieId").setRatingCol("rating")
     val alsImplicit = new ALS().setMaxIter(5).setRegParam(0.01).setImplicitPrefs(true).setUserCol("userId").setItemCol("movieId").setRatingCol("rating")
+
     //把推荐模型放在训练数据上训练
     val modelExplicit = alsExplicit.fit(training)
     val modelImplicit = alsImplicit.fit(training)
+
+    // 冷启动策略
+    // "nan":  predicted value for unknown ids will be NaN.
+    // "drop": rows in the input DataFrame containing unknown ids will be dropped from the output DataFrame containing predictions.
+    modelExplicit.setColdStartStrategy("drop")
+    modelImplicit.setColdStartStrategy("drop")
+
     // 使用训练好的推荐模型对测试集中的用户商品进行预测评分，得到预测评分的数据集
     val predictionsExplicit = modelExplicit.transform(test)
     val predictionsImplicit = modelImplicit.transform(test)
     //结果输出，对比一下真实结果与预测结果
     predictionsExplicit.show()
     predictionsImplicit.show()
+
     //通过计算模型的均方根误差来对模型进行评估，均方根误差越小，模型越准确
     val evaluator = new RegressionEvaluator().setMetricName("rmse").setLabelCol("rating").setPredictionCol("prediction")
     val rmseExplicit = evaluator.evaluate(predictionsExplicit)
@@ -58,6 +67,24 @@ object AlsCF {
     //打印出两个模型的均方根误差
     println(s"Explicit:Root-mean-square error = $rmseExplicit")
     println(s"Implicit:Root-mean-square error = $rmseImplicit")
-    //可以看到打分的均方差值为1.69和1.80左右。由于本例的数据量很少，预测的结果和实际相比有一定的差距
+
+    // 推荐
+    // Generate top 10 movie recommendations for each user
+    val userRecs = modelExplicit.recommendForAllUsers(10)
+    // Generate top 10 user recommendations for each movie
+    val movieRecs = modelExplicit.recommendForAllItems(10)
+
+    // Generate top 10 movie recommendations for a specified set of users
+    val users = ratings.select(alsExplicit.getUserCol).distinct().limit(3)
+    val userSubsetRecs = modelExplicit.recommendForUserSubset(users, 10)
+    println(s"Generate top 10 movie recommendations for a specified set of users = $userSubsetRecs")
+    userSubsetRecs.show()
+
+    // Generate top 10 user recommendations for a specified set of movies
+    val movies = ratings.select(alsExplicit.getItemCol).distinct().limit(3)
+    val movieSubSetRecs = modelExplicit.recommendForItemSubset(movies, 10)
+    println(s"Generate top 10 user recommendations for a specified set of movies = $movieSubSetRecs")
+    movieSubSetRecs.show()
+    spark.stop()
   }
 }
