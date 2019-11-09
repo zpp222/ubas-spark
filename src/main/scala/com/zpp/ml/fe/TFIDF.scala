@@ -32,6 +32,8 @@ object TFIDF {
     // 每一个单词对应的TF-IDF度量值
     val rescaledData = idfModel.transform(featurizedData)
     rescaledData.select("label", "features").show(false)
+
+    spark.stop()
   }
 
 }
