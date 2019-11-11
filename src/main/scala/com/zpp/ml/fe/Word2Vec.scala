@@ -2,6 +2,9 @@ import org.apache.spark.ml.feature.Word2Vec
 import org.apache.spark.ml.linalg.Vector
 import org.apache.spark.sql.{Row, SparkSession}
 
+/**
+ * Skip-gram模型
+ */
 object Word2Vec {
   val spark: SparkSession = SparkSession.builder().appName("sqlDemo").master("local[4]")
     .config("spark.scheduler.mode", "FAIR")
@@ -28,5 +31,8 @@ object Word2Vec {
     val result = model.transform(documentDF)
     result.collect().foreach { case Row(text: Seq[_], features: Vector) =>
       println(s"Text: [${text.mkString(", ")}] => \nVector: $features\n") }
+
+    // 相似性
+    model.findSynonyms("Spark", 20).collect().foreach(println)
   }
 }
